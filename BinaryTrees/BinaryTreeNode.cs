@@ -101,8 +101,38 @@ namespace BinaryTrees
         public int Height()
         {
             //TODO #4: Return the height of this tree
+
+            if (this.LeftChild ==null && this.RightChild ==null)
+            {
+                return 1;
+            }
+
+
+            int alturaDerecha = 0;
+            int alturaIzquierda = 0;
+
+
+            if (this.LeftChild != null)
+            {
+                alturaIzquierda = alturaIzquierda + this.LeftChild.Height();
+            }
             
-            return 0;
+            if (this.RightChild != null)
+            {
+                alturaDerecha = alturaDerecha + this.RightChild.Height();
+            }
+
+            if (alturaDerecha<alturaIzquierda)
+            {
+                return alturaIzquierda;
+            }else if (alturaDerecha > alturaIzquierda)
+            {
+                return alturaDerecha;
+            }
+            else
+            {
+                return alturaDerecha;
+            }
             
         }
 
