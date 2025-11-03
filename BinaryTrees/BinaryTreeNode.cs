@@ -1,5 +1,6 @@
 
 using System;
+using System.ComponentModel.DataAnnotations;
 namespace BinaryTrees
 {
     public class BinaryTreeNode<TKey, TValue> where TKey : IComparable<TKey>
@@ -45,7 +46,37 @@ namespace BinaryTrees
             //              b) Else, we should ask the LeftChild to add it recursively
             //          -If the current node has a lower key that the new node (use CompareTo()), the new node should be on this node's right side.
             //          -If the current node and the new node have the same key, just update this node's value with the new node's value
-            
+
+            int comparacion = node.Key.CompareTo(this.Key);
+
+            if (comparacion < 0)
+            {
+                if (this.LeftChild == null)
+                {
+                    this.LeftChild = node;
+                }
+                else
+                {
+                    this.LeftChild.Add(node);
+                }
+            }
+            else if (comparacion > 0)
+            {
+                if (this.RightChild == null)
+                {
+                    this.RightChild = node;
+                }
+                else
+                {
+                    this.RightChild.Add(node);
+                }
+            }
+            else
+            {
+                this.Value = node.Value;
+            }
+
+
         }
 
         public int Count()
