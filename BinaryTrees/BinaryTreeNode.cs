@@ -105,7 +105,7 @@ namespace BinaryTrees
 
             if (this.LeftChild ==null && this.RightChild ==null)
             {
-                return 1;
+                return 0;
             }
 
 
@@ -151,26 +151,30 @@ namespace BinaryTrees
             int comparacion = this.Key.CompareTo(key);
 
 
-            if (comparacion < 0)
+            if (comparacion > 0)
             {
                 if (LeftChild == null)
                 {
                     return default;
                 }
-                LeftChild.Get(key);
+                else
+                {
+                    return LeftChild.Get(key);
+                }
             }
-            else if (comparacion > 0)
+            else if (comparacion < 0)
             {
                 if (RightChild == null)
                 {
                     return default;
                 }
-                RightChild.Get(key);
+                else
+                {
+                    return RightChild.Get(key);
+                }
             }
-            else
-            {
-                return this.Value;
-            }            
+            
+            return this.Value;            
         }
 
         
@@ -181,7 +185,36 @@ namespace BinaryTrees
             //so this method returns the node with which this node needs to be replaced. If this node isn't the
             //one we are looking for, we will return this, so that the parent node can replace LeftChild/RightChild
             //with the same node it had.
-            
+
+            int comparacion = key.CompareTo(this.Key);
+
+            if (comparacion < 0)
+            {
+                if (LeftChild != null)
+                {
+                    LeftChild = LeftChild.Remove(key);
+                }
+            } else if (comparacion>0)
+            {
+                if (RightChild != null)
+                {
+                    RightChild = RightChild.Remove(key);
+                }
+            }
+            else
+            {
+                if (RightChild == null && LeftChild == null)
+                {
+                    return null;
+                }
+                
+
+
+
+
+
+
+            }
 
 
 
