@@ -8,7 +8,8 @@ namespace Trees
     {
         private T Value;
         //TODO #1: Declare a member variable called "Children" as a list of TreeNode<T> objects
-        
+
+        private TreeNode<T> Children;
 
         public TreeNode(T value)
         {

@@ -1,6 +1,7 @@
 
 using System;
 using System.ComponentModel.DataAnnotations;
+using System.Xml;
 namespace BinaryTrees
 {
     public class BinaryTreeNode<TKey, TValue> where TKey : IComparable<TKey>
@@ -122,16 +123,17 @@ namespace BinaryTrees
                 alturaDerecha = alturaDerecha + this.RightChild.Height();
             }
 
-            if (alturaDerecha<alturaIzquierda)
+            if (alturaDerecha < alturaIzquierda)
             {
-                return alturaIzquierda;
-            }else if (alturaDerecha > alturaIzquierda)
+                return 1 + alturaIzquierda;
+            }
+            else if (alturaDerecha > alturaIzquierda)
             {
-                return alturaDerecha;
+                return 1 + alturaDerecha;
             }
             else
             {
-                return alturaDerecha;
+                return 1 + alturaDerecha;
             }
             
         }
@@ -144,9 +146,31 @@ namespace BinaryTrees
             //              b) Else, we should ask the LeftChild to find the node recursively. It must be below LeftChild
             //          -If the current node has a lower key that the new node (use CompareTo()), the key should be on this node's right side.
             //          -If the current node and the new node have the same key, just return this node's value. We found it
-            
-            return default;
-            
+
+
+            int comparacion = this.Key.CompareTo(key);
+
+
+            if (comparacion < 0)
+            {
+                if (LeftChild == null)
+                {
+                    return default;
+                }
+                LeftChild.Get(key);
+            }
+            else if (comparacion > 0)
+            {
+                if (RightChild == null)
+                {
+                    return default;
+                }
+                RightChild.Get(key);
+            }
+            else
+            {
+                return this.Value;
+            }            
         }
 
         
@@ -158,6 +182,12 @@ namespace BinaryTrees
             //one we are looking for, we will return this, so that the parent node can replace LeftChild/RightChild
             //with the same node it had.
             
+
+
+
+
+
+
             return null;
             
         }
