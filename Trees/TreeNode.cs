@@ -74,9 +74,21 @@ namespace Trees
         public int Height()
         {
             //TODO #6: Return the height of this tree
-            
-            return 0;
-            
+            int maxHeight = 0;
+            if (Children.Count() == 0)
+            {
+                return 1;
+            }
+            for (int i = 0; i < Children.Count(); i++)
+            {
+                TreeNode<T> child = Children.Get(i);
+                int childHeight = child.Height();
+                if (childHeight > maxHeight)
+                {
+                    maxHeight = childHeight;
+                }
+            }
+            return 1 + maxHeight;            
         }
 
         
