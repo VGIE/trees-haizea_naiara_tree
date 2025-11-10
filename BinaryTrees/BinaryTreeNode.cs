@@ -194,12 +194,16 @@ namespace BinaryTrees
                 {
                     LeftChild = LeftChild.Remove(key);
                 }
+                return this;
+
             } else if (comparacion>0)
             {
                 if (RightChild != null)
                 {
                     RightChild = RightChild.Remove(key);
                 }
+                return this;
+
             }
             else
             {
@@ -207,22 +211,34 @@ namespace BinaryTrees
                 {
                     return null;
                 }
-                
+                else if (RightChild == null && LeftChild != null)
+                {
+                    return LeftChild;
+                }
+                else if (RightChild != null && LeftChild == null)
+                {
+                    return RightChild;
+                }
+                else
+                {
+                    BinaryTreeNode<TKey, TValue> miniNode = RightChild;
 
+                    while (miniNode.LeftChild != null)
+                    {
+                        miniNode = miniNode.LeftChild;
+                    }
 
+                    this.Key = miniNode.Key;
+                    this.Value = miniNode.Value;
 
+                    RightChild = RightChild.Remove(miniNode.Key);
 
+                    return this;
+
+                }
 
 
             }
-
-
-
-
-
-
-            return null;
-            
         }
 
         public int KeysToArray(TKey[] keys, int index)
