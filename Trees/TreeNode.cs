@@ -37,7 +37,7 @@ namespace Trees
             string output = null;
             string leftSpace = null;
             for (int i = 0; i < depth; i++) leftSpace += " ";
-            if (leftSpace != null) leftSpace += " ";
+            if (leftSpace != null) leftSpace += "->";
 
             output += $"{leftSpace}[{Value}]\n";
 
@@ -97,7 +97,46 @@ namespace Trees
         public void Remove(T value)
         {
             //TODO #7: Remove the child node that has Value=value. Apply recursively
-            
+            for (int i=0; i<Children.Count(); i++)
+            {
+                TreeNode<T> child = Children.Get(i);
+                if (child.Value.Equals(Value))
+                {
+                    int numHijos = child.Children.Count();
+                    if(numHijos == 0)
+                    {
+                        Children.Remove(i);
+                        return;
+                    }
+                    if(numHijos == 1)
+                    {
+                        TreeNode<T> unicoHijo = child.Children.Get(0);
+                        child.Value = unicoHijo.Value;
+                        List<TreeNode<T>> nuevosHijos = new List<TreeNode<T>>();
+                        for (int j=0; j<unicoHijo.Children.Count(); j++)
+                        {
+                            nuevosHijos.Add(unicoHijo.Children.Get(i));
+                        }
+                        child.Children = nuevosHijos;
+                        return;
+                    }
+                    TreeNode<T> hijoElegido = child.Children.Get(0);
+                    List<TreeNode<T>> nuevaListaHijos = new List<TreeNode<T>>();
+                    for (int j=0; j<hijoElegido.Children.Count(); j++)
+                    {
+                        nuevaListaHijos.Add(hijoElegido.Children.Get(j));
+                    }
+                    for (int j=1; j<numHijos; j++)
+                    {
+                        TreeNode<T> otrosHijos = child.Children.Get(j);
+                        nuevaListaHijos.Add(otrosHijos);
+                    }
+                    child.Value = hijoElegido.Value;
+                    child.Children = nuevaListaHijos;
+                    return;
+                }
+                child.Remove(value);
+            }
         }
 
         public TreeNode<T> Find(T value)
