@@ -142,7 +142,15 @@ namespace Trees
         public TreeNode<T> Find(T value)
         {
             //TODO #8: Return the node that contains this value (it might be this node or a child). Apply recursively
-            
+            if (this.Value.Equals(Value))
+            {
+                return this;
+            }
+            for (int i=0; i < Children.Count(); i++)
+            {
+                TreeNode<T> child = Children.Get(i);
+                TreeNode<T> childFind = child.Find(value);
+            }
             return null;
         }
 
@@ -150,7 +158,40 @@ namespace Trees
         public void Remove(TreeNode<T> node)
         {
             //TODO #9: Same as #6, but this method is given the specific node to remove, not the value
-            
+            for (int i =0; i<Children.Count(); i++)
+            {
+                TreeNode<T> child = Children.Get(i);
+                if (child == node)
+                {
+                    int numHijos = child.Children.Count();
+                    if (numHijos ==0)
+                    {
+                        Children.Remove(i);
+                        return;
+                    }
+                    if(numHijos == 1)
+                    {
+                        TreeNode<T> unicoHijo = child.Children.Get(0);
+                        child.Value = unicoHijo.Value;
+                        List<TreeNode<T>> nuevaListaHijos = new List<TreeNode<T>>();
+                        for(int j=0; j<unicoHijo.Children.Count(); j++)
+                        {
+                            nuevaListaHijos.Add(unicoHijo.Children.Get(j));
+                        }
+                        child.Children = nuevaListaHijos;
+                        return;
+                    }
+                    TreeNode<T> hijoElegido = child.Children.Get(0);
+                    List<TreeNode<T>> nuevaListaHijos = new List<TreeNode<T>>();
+                    for (int j=0; j<hijoElegido.Children.Count(); j++)
+                    {
+                        nuevaListaHijos.Add(hijoElegido.Children.Get(j));
+                    }
+                    child.Value = hijoElegido.Value;
+                    child.Children = nuevaListaHijos;
+                    return;
+                }
+            }
         }
     }
 }
