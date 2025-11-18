@@ -126,11 +126,6 @@ namespace Trees
                     {
                         nuevaListaHijos.Add(hijoElegido.Children.Get(j));
                     }
-                    for (int j=1; j<numHijos; j++)
-                    {
-                        TreeNode<T> otrosHijos = child.Children.Get(j);
-                        nuevaListaHijos.Add(otrosHijos);
-                    }
                     child.Value = hijoElegido.Value;
                     child.Children = nuevaListaHijos;
                     return;
