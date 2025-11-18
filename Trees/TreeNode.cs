@@ -64,8 +64,7 @@ namespace Trees
             int count = 1;
             for (int i = 0; i<Children.Count(); i++)
             {
-                TreeNode<T> child = Children.Get(i);
-                count += child.Count();
+                count += Children.Get(i).Count();
             }
             return count;
             
@@ -74,21 +73,20 @@ namespace Trees
         public int Height()
         {
             //TODO #6: Return the height of this tree
-            int maxHeight = 0;
             if (Children.Count() == 0)
             {
                 return 0;
             }
+            int alturaMax = 0;
             for (int i = 0; i < Children.Count(); i++)
             {
-                TreeNode<T> child = Children.Get(i);
-                int childHeight = child.Height();
-                if (childHeight > maxHeight)
+                int alturaHijos = Children.Get(i).Height();
+                if (alturaHijos > alturaMax)
                 {
-                    maxHeight = childHeight;
+                    alturaMax = alturaHijos;
                 }
             }
-            return 1 + maxHeight;            
+            return alturaMax + 1;            
         }
 
         
@@ -99,52 +97,35 @@ namespace Trees
             //TODO #7: Remove the child node that has Value=value. Apply recursively
             for (int i=0; i<Children.Count(); i++)
             {
-                TreeNode<T> child = Children.Get(i);
-                if (child.Value.Equals(value))
+                if (Children.Get(i).Value.Equals(value))
                 {
-                    int numHijos = child.Children.Count();
+                    int numHijos = Children.Get(i).Count();
                     if(numHijos == 0)
                     {
                         Children.Remove(i);
                         return;
                     }
-                    if(numHijos == 1)
-                    {
-                        TreeNode<T> unicoHijo = child.Children.Get(0);
-                        child.Value = unicoHijo.Value;
-                        List<TreeNode<T>> nuevosHijos = new List<TreeNode<T>>();
-                        for (int j=0; j<unicoHijo.Children.Count(); j++)
-                        {
-                            nuevosHijos.Add(unicoHijo.Children.Get(j));
-                        }
-                        child.Children = nuevosHijos;
-                        return;
-                    }
-                    TreeNode<T> hijoElegido = child.Children.Get(0);
-                    List<TreeNode<T>> nuevaListaHijos = new List<TreeNode<T>>();
-                    for (int j=0; j<hijoElegido.Children.Count(); j++)
-                    {
-                        nuevaListaHijos.Add(hijoElegido.Children.Get(j));
-                    }
-                    child.Value = hijoElegido.Value;
-                    child.Children = nuevaListaHijos;
+                    Children.Remove(i);
                     return;
                 }
-                child.Remove(value);
+                Children.Get(i).Remove(value);
             }
         }
 
         public TreeNode<T> Find(T value)
         {
             //TODO #8: Return the node that contains this value (it might be this node or a child). Apply recursively
-            if (this.Value.Equals(Value))
+            if (this.Value.Equals(value))
             {
                 return this;
             }
             for (int i=0; i < Children.Count(); i++)
             {
-                TreeNode<T> child = Children.Get(i);
-                TreeNode<T> childFind = child.Find(value);
+                TreeNode<T> hijo = Children.Get(i).Find(value);
+                if (hijo != null)
+                {
+                    return hijo;
+                }
             }
             return null;
         }
@@ -155,37 +136,12 @@ namespace Trees
             //TODO #9: Same as #6, but this method is given the specific node to remove, not the value
             for (int i =0; i<Children.Count(); i++)
             {
-                TreeNode<T> child = Children.Get(i);
-                if (child == node)
+                if (Children.Get(i) == node)
                 {
-                    int numHijos = child.Children.Count();
-                    if (numHijos ==0)
-                    {
-                        Children.Remove(i);
-                        return;
-                    }
-                    if(numHijos == 1)
-                    {
-                        TreeNode<T> unicoHijo = child.Children.Get(0);
-                        child.Value = unicoHijo.Value;
-                        List<TreeNode<T>> nuevosHijos = new List<TreeNode<T>>();
-                        for(int j=0; j<unicoHijo.Children.Count(); j++)
-                        {
-                            nuevosHijos.Add(unicoHijo.Children.Get(j));
-                        }
-                        child.Children = nuevosHijos;
-                        return;
-                    }
-                    TreeNode<T> hijoElegido = child.Children.Get(0);
-                    List<TreeNode<T>> nuevaListaHijos = new List<TreeNode<T>>();
-                    for (int j=0; j<hijoElegido.Children.Count(); j++)
-                    {
-                        nuevaListaHijos.Add(hijoElegido.Children.Get(j));
-                    }
-                    child.Value = hijoElegido.Value;
-                    child.Children = nuevaListaHijos;
+                    Children.Remove(i);
                     return;
                 }
+                Children.Get(i).Remove(node);
             }
         }
     }
