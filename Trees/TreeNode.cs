@@ -77,7 +77,7 @@ namespace Trees
             int maxHeight = 0;
             if (Children.Count() == 0)
             {
-                return 1;
+                return 0;
             }
             for (int i = 0; i < Children.Count(); i++)
             {
@@ -173,12 +173,12 @@ namespace Trees
                     {
                         TreeNode<T> unicoHijo = child.Children.Get(0);
                         child.Value = unicoHijo.Value;
-                        List<TreeNode<T>> nuevaListaHijos = new List<TreeNode<T>>();
+                        List<TreeNode<T>> nuevosHijos = new List<TreeNode<T>>();
                         for(int j=0; j<unicoHijo.Children.Count(); j++)
                         {
-                            nuevaListaHijos.Add(unicoHijo.Children.Get(j));
+                            nuevosHijos.Add(unicoHijo.Children.Get(j));
                         }
-                        child.Children = nuevaListaHijos;
+                        child.Children = nuevosHijos;
                         return;
                     }
                     TreeNode<T> hijoElegido = child.Children.Get(0);
