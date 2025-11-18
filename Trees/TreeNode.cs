@@ -100,7 +100,7 @@ namespace Trees
             for (int i=0; i<Children.Count(); i++)
             {
                 TreeNode<T> child = Children.Get(i);
-                if (child.Value.Equals(Value))
+                if (child.Value.Equals(value))
                 {
                     int numHijos = child.Children.Count();
                     if(numHijos == 0)
@@ -115,7 +115,7 @@ namespace Trees
                         List<TreeNode<T>> nuevosHijos = new List<TreeNode<T>>();
                         for (int j=0; j<unicoHijo.Children.Count(); j++)
                         {
-                            nuevosHijos.Add(unicoHijo.Children.Get(i));
+                            nuevosHijos.Add(unicoHijo.Children.Get(j));
                         }
                         child.Children = nuevosHijos;
                         return;
